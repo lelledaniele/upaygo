@@ -19,7 +19,7 @@ See [*wiki* section](https://github.com/lelledaniele/upaygo/wiki)
 
 ### APIs
 
-- [Swagger]((https://github.com/lelledaniele/upaygo/docs/swagger.yaml)
+- [Swagger](http://localhost:8080/swagger/index.html)
 - [Postman collection](https://www.getpostman.com/collections/08908d8ba23942d002f6)
 
 ## TODO
