@@ -1,0 +1,22 @@
+{
+  "stripe": {
+    "EUR": {
+      "pk_key": "pk_XXX",
+      "sk_key": "sk_xxx"
+    },
+    "CAD": {
+      "pk_key": "pk_XXX",
+      "sk_key": "sk_xxx"
+    },
+    // ...
+    "default": {
+      "pk_key": "pk_XXX",
+      "sk_key": "sk_XXX"
+    }
+  },
+  "server": {
+    "protocol": "http://",
+    "domain": "localhost",
+    "port": "80"
+  }
+}

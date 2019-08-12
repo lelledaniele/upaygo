@@ -1,0 +1,4 @@
+{
+  "Why this file?": "So far I was not capable to disable config.init during go test,",
+  "2": "I preferred this temp solution instead to put an if in production code"
+}
