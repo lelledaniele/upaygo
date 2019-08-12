@@ -1,0 +1,62 @@
+basePath: '{{.BasePath}}'
+host: '{{.Host}}'
+info:
+  contact: {}
+  description: Microservice to manage payment
+  license:
+    name: MIT
+  title: uPayment in GO
+  version: 1.0.0
+paths:
+  /payment_intents:
+    post:
+      consumes:
+      - application/json
+      description: Create an unconfirmed and manual intent
+      parameters:
+      - description: Intent's currency
+        in: formData
+        name: currency
+        required: true
+        type: string
+      - description: Intent's amount
+        in: formData
+        name: amount
+        required: true
+        type: integer
+      - description: Intent's payment source
+        in: formData
+        name: payment_source
+        required: true
+        type: string
+      - description: Intent's customer reference
+        in: formData
+        name: customer_reference
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/intent'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/error'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/error'
+            type: object
+      summary: Create an intent
+      tags:
+      - intent
+swagger: "2.0"
