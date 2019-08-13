@@ -4,9 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/go-chi/chi"
-	cic "github.com/lelledaniele/upaygo/controller/api/intent/create"
-
 	conf "github.com/lelledaniele/upaygo/config"
 
 	_ "github.com/lelledaniele/upaygo/docs"
@@ -18,16 +15,12 @@ import (
 // @description Microservice to manage payment
 // @license.name MIT
 func main() {
-	u, p := conf.GetServerConfig().GetURI(), conf.GetServerConfig().GetPort()
-	r := chi.NewRouter()
+	s := conf.GetServerConfig()
 
-	r.Get("/swagger/*", httpSwagger.Handler(
-		httpSwagger.URL(u+"/swagger/doc.json"),
+	http.Handle("/swagger/", httpSwagger.Handler(
+		httpSwagger.URL(s.GetURI()+"/swagger/doc.json"),
 	))
+	http.HandleFunc(intentCreateURL, intentCreateHandler)
 
-	_ = http.ListenAndServe(":"+p, r)
-
-	http.HandleFunc(cic.URL, cic.Handler)
-
-	log.Fatal(http.ListenAndServe(":"+p, nil))
+	log.Fatal(http.ListenAndServe(":"+s.GetPort(), nil))
 }

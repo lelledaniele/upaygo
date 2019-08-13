@@ -13,13 +13,21 @@ Payment Gateway Microservice in Golang
 - No database infrastructure needed
 - Stripe API keys configuration per currency
 
+## Installation
+
+```bash
+cp config.json.dist config.json
+vi config.json # Add your config values
+go run *.go # go build ./...
+```
+
 ## Doc
 
 See [*wiki* section](https://github.com/lelledaniele/upaygo/wiki)
 
 ### APIs
 
-- [Swagger](http://localhost:8080/swagger/index.html)
+- Swagger */swagger/index.html*
 - [Postman collection](https://www.getpostman.com/collections/08908d8ba23942d002f6)
 
 ## TODO
