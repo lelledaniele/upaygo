@@ -21,9 +21,11 @@ vi config.json # Add your config values
 go run *.go # go build ./...
 ```
 
-## Doc
+## Tests
 
-See [*wiki* section](https://github.com/lelledaniele/upaygo/wiki)
+```bash
+go test ./...
+```
 
 ### APIs
 
