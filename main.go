@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	apprest "github.com/lelledaniele/upaygo/controller/rest"
+
 	conf "github.com/lelledaniele/upaygo/config"
 
 	_ "github.com/lelledaniele/upaygo/docs"
@@ -20,7 +22,7 @@ func main() {
 	http.Handle("/swagger/", httpSwagger.Handler(
 		httpSwagger.URL(s.GetURI()+"/swagger/doc.json"),
 	))
-	http.HandleFunc(intentCreateURL, intentCreateHandler)
+	http.HandleFunc(apprest.IntentCreateURL, apprest.IntentCreateHandler)
 
 	log.Fatal(http.ListenAndServe(":"+s.GetPort(), nil))
 }

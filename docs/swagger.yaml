@@ -1,73 +1,11 @@
 basePath: '{{.BasePath}}'
 definitions:
-  main.Amount:
-    properties:
-      amount:
-        type: integer
-      currency:
-        $ref: '#/definitions/main.Currency'
-        type: object
-    type: object
-  main.Currency:
-    properties:
-      ISO_4217:
-        description: 3 Char symbol - ISO 4217
-        type: string
-    type: object
-  main.Customer:
-    properties:
-      gateway_reference:
-        description: Gateway reference
-        type: string
-    type: object
-  main.IntentStatus:
-    properties:
-      gateway_status:
-        type: string
-    type: object
-  main.PaymentIntent:
-    properties:
-      amount:
-        $ref: '#/definitions/main.Amount'
-        type: object
-      confirmation_method:
-        description: Confirmation method
-        type: string
-      created_at:
-        description: Create At
-        type: integer
-      customer:
-        $ref: '#/definitions/main.Customer'
-        type: object
-      gateway_reference:
-        description: Gateway reference
-        type: string
-      intent_status:
-        $ref: '#/definitions/main.IntentStatus'
-        type: object
-      next_action:
-        description: Next Action
-        type: string
-      off_session:
-        description: Off session
-        type: boolean
-      payment_source:
-        $ref: '#/definitions/main.PaymentSource'
-        type: object
-      user_gateway_reference:
-        description: User gateway reference
-        type: string
-    type: object
-  main.PaymentSource:
-    properties:
-      gateway_reference:
-        description: Gateway reference
-        type: string
-    type: object
-  main.RESTError:
+  apprest.RESTError:
     properties:
       error:
         type: string
+    type: object
+  paymentintent.Intent:
     type: object
 host: '{{.Host}}'
 info:
@@ -81,7 +19,7 @@ paths:
   /payment_intents:
     post:
       consumes:
-      - multipart/form-data
+      - application/x-www-form-urlencoded
       description: Create an unconfirmed and manual intent
       parameters:
       - description: Intent's currency
@@ -109,17 +47,17 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.PaymentIntent'
+            $ref: '#/definitions/paymentintent.Intent'
             type: object
         "405":
           description: Method Not Allowed
           schema:
-            $ref: '#/definitions/main.RESTError'
+            $ref: '#/definitions/apprest.RESTError'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/main.RESTError'
+            $ref: '#/definitions/apprest.RESTError'
             type: object
       summary: Create an intent
       tags:

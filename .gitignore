@@ -2,3 +2,6 @@
 /upaygo.iml
 /vendor
 /config.json
+
+# Temp
+/test/functional/config.json

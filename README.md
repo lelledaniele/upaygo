@@ -18,13 +18,17 @@ Payment Gateway Microservice in Golang
 ```bash
 cp config.json.dist config.json
 vi config.json # Add your config values
-go run *.go # go build ./...
+
+cp config.json test/functional
+
+go run main.go # go build main.go
 ```
 
 ## Tests
 
 ```bash
-go test ./...
+# Run the program
+go test ./... # In another terminal
 ```
 
 ### APIs
@@ -35,4 +39,8 @@ go test ./...
 ## TODO
 
 See [*projects* section](https://github.com/lelledaniele/upaygo/projects)
+
+### Goals
+
+- Finish [Payment Intent project](https://github.com/lelledaniele/upaygo/projects/1) by the end of August 2019. **EU SCA law will be on duty after 14th September 2019** 
 
