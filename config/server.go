@@ -1,5 +1,9 @@
 package config
 
+import (
+	"strings"
+)
+
 // ServerConfig exposes the server public method without exposing properties
 type ServerConfig interface {
 	GetProtocol() string
@@ -37,5 +41,11 @@ func (s *server) GetPort() string {
 
 // GetURI returns server URL by combination of Protocol, Domain and Port
 func (s *server) GetURI() string {
-	return s.Protocol + s.Domain + ":" + s.Port
+	var b strings.Builder
+	b.WriteString(s.Protocol)
+	b.WriteString(s.Domain)
+	b.WriteString(":")
+	b.WriteString(s.Port)
+
+	return b.String()
 }
