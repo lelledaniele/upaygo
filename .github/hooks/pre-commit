@@ -1,0 +1,11 @@
+#!/bin/bash
+
+go fmt ./...
+golint .
+go test ./...
+# shellcheck disable=SC2181
+if [ $? != 0 ]
+then
+    echo "Committed code break go tests"
+    exit 1
+fi
