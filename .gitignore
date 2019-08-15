@@ -4,4 +4,4 @@
 /config.json
 
 # Temp
-/test/functional/config.json
+/tests/functional/config.json

@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	apprest "github.com/lelledaniele/upaygo/controller/rest"
+	restintentcreate "github.com/lelledaniele/upaygo/controller/rest/intent/create"
 
-	conf "github.com/lelledaniele/upaygo/config"
+	appconfig "github.com/lelledaniele/upaygo/config"
 
 	_ "github.com/lelledaniele/upaygo/docs"
 	httpSwagger "github.com/swaggo/http-swagger"
@@ -17,12 +17,12 @@ import (
 // @description Microservice to manage payment
 // @license.name MIT
 func main() {
-	s := conf.GetServerConfig()
+	s := appconfig.GetServerConfig()
 
 	http.Handle("/swagger/", httpSwagger.Handler(
 		httpSwagger.URL(s.GetURI()+"/swagger/doc.json"),
 	))
-	http.HandleFunc(apprest.IntentCreateURL, apprest.IntentCreateHandler)
+	http.HandleFunc(restintentcreate.URL, restintentcreate.Handler)
 
 	log.Fatal(http.ListenAndServe(":"+s.GetPort(), nil))
 }

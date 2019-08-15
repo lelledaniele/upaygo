@@ -58,8 +58,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/paymentintent.Intent"
+                            "type": "interface"
                         }
                     },
                     "405": {

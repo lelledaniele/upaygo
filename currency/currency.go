@@ -1,4 +1,4 @@
-package currency
+package appcurrency
 
 import (
 	"fmt"

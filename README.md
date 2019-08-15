@@ -29,7 +29,6 @@ go run main.go # go build main.go
 ## Tests
 
 ```bash
-# Run the program
 go test ./... # In another terminal
 ```
 

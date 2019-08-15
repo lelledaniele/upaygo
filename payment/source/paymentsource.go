@@ -1,4 +1,4 @@
-package paymentsource
+package apppaymentsource
 
 type Source interface {
 	GetGatewayReference() string

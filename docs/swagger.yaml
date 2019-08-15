@@ -47,8 +47,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/paymentintent.Intent'
-            type: object
+            type: interface
         "405":
           description: Method Not Allowed
           schema:
