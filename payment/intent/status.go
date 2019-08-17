@@ -1,9 +1,10 @@
-package paymentintent
+package apppaymentintent
 
 const (
-	requirescapture = "requires_capture"
-	canceled        = "canceled"
-	succeeded       = "succeeded"
+	requiresconfirmation = "requires_confirmation"
+	requirescapture      = "requires_capture"
+	canceled             = "canceled"
+	succeeded            = "succeeded"
 )
 
 type status struct {

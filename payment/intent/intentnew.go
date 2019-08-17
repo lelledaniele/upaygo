@@ -1,4 +1,4 @@
-package paymentintent
+package apppaymentintent
 
 import (
 	"errors"

@@ -1,4 +1,4 @@
-package paymentintent
+package apppaymentintent
 
 import (
 	"time"
@@ -22,6 +22,7 @@ type Intent interface {
 	IsCanceled() bool
 	IsSucceeded() bool
 	RequiresCapture() bool
+	RequiresConfirmation() bool
 }
 
 type i struct {
@@ -90,4 +91,9 @@ func (i *i) IsSucceeded() bool {
 // RequiresCapture if status.s is requirescapture
 func (i *i) RequiresCapture() bool {
 	return i.S.S == requirescapture
+}
+
+// RequiresConfirmation if status.s is requiresconfirmation
+func (i *i) RequiresConfirmation() bool {
+	return i.S.S == requiresconfirmation
 }

@@ -8,7 +8,6 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/customer"
 
 	appcurrency "github.com/lelledaniele/upaygo/currency"
@@ -62,6 +61,5 @@ func TestNewStripe(t *testing.T) {
 		t.Errorf("The new customer.email is incorrect, got: %v want %v", got.GetEmail(), email)
 	}
 
-	params := &stripe.CustomerParams{}
-	_, _ = customer.Del(got.GetGatewayReference(), params)
+	_, _ = customer.Del(got.GetGatewayReference(), nil)
 }
