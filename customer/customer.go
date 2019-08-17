@@ -2,6 +2,7 @@ package appcustomer
 
 type Customer interface {
 	GetGatewayReference() string
+	GetEmail() string
 }
 
 type c struct {
@@ -12,6 +13,11 @@ type c struct {
 // GetGatewayReference exposes c.R value
 func (c *c) GetGatewayReference() string {
 	return c.R
+}
+
+// GetEmail exposes c.Email value
+func (c *c) GetEmail() string {
+	return c.Email
 }
 
 // New returns a new instance of c
