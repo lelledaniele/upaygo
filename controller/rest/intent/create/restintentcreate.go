@@ -8,8 +8,8 @@ import (
 	"strconv"
 
 	appamount "github.com/lelledaniele/upaygo/amount"
-	apprest "github.com/lelledaniele/upaygo/controller/rest"
 	appcustomer "github.com/lelledaniele/upaygo/customer"
+	apperror "github.com/lelledaniele/upaygo/error"
 	appintent "github.com/lelledaniele/upaygo/payment/intent"
 	appsource "github.com/lelledaniele/upaygo/payment/source"
 )
@@ -39,14 +39,14 @@ const (
 // @Param payment_source formData string true "Intent's payment source"
 // @Param customer_reference formData string false "Intent's customer reference"
 // @Success 200 {interface} paymentintent.Intent
-// @Failure 405 {object} apprest.RESTError
-// @Failure 500 {object} apprest.RESTError
+// @Failure 405 {object} apperror.RESTError
+// @Failure 500 {object} apperror.RESTError
 // @Router /payment_intents [post]
 func Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", responseTye)
 
 	if r.Method != method {
-		e := apprest.RESTError{
+		e := apperror.RESTError{
 			M: fmt.Sprintf(errorMethod, method),
 		}
 		_ = json.NewEncoder(w).Encode(e)
@@ -56,7 +56,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	a, ps, cus, e := getParams(r)
 	if e != nil {
-		e := apprest.RESTError{
+		e := apperror.RESTError{
 			M: e.Error(),
 		}
 		_ = json.NewEncoder(w).Encode(e)
@@ -66,7 +66,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	pi, e := appintent.New(a, ps, cus)
 	if e != nil {
-		e := apprest.RESTError{
+		e := apperror.RESTError{
 			M: fmt.Sprintf(errorIntentCreation, e),
 		}
 		_ = json.NewEncoder(w).Encode(e)
@@ -76,7 +76,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	e = json.NewEncoder(w).Encode(pi)
 	if e != nil {
-		e := apprest.RESTError{
+		e := apperror.RESTError{
 			M: fmt.Sprintf(errorIntentEncoding, e),
 		}
 		_ = json.NewEncoder(w).Encode(e)

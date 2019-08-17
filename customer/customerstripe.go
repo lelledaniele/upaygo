@@ -3,6 +3,8 @@ package appcustomer
 import (
 	"errors"
 
+	apperror "github.com/lelledaniele/upaygo/error"
+
 	"github.com/stripe/stripe-go/customer"
 
 	appconfig "github.com/lelledaniele/upaygo/config"
@@ -28,6 +30,11 @@ func NewStripe(email string, ac appcurrency.Currency) (Customer, error) {
 	}
 	cus, e := customer.New(params)
 	if e != nil {
+		m, es := apperror.GetStripeErrorMessage(e)
+		if es == nil {
+			return nil, errors.New(m)
+		}
+
 		return nil, e
 	}
 

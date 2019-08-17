@@ -4,6 +4,8 @@ import (
 	"errors"
 	"time"
 
+	apperror "github.com/lelledaniele/upaygo/error"
+
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/paymentintent"
 
@@ -42,6 +44,11 @@ func New(a appamount.Amount, p apppaymentsource.Source, c appcustomer.Customer) 
 
 	spi, e := paymentintent.New(ic)
 	if e != nil {
+		m, es := apperror.GetStripeErrorMessage(e)
+		if es == nil {
+			return nil, errors.New(m)
+		}
+
 		return nil, e
 	}
 

@@ -1,4 +1,4 @@
-package apprest
+package apperror
 
 type RESTError struct {
 	M string `json:"error"`
