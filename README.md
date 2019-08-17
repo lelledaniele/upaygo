@@ -2,6 +2,14 @@
 
 Payment Gateway Microservice in Golang
 
+## PSD2 SCA
+
+**EU SCA law will be on duty after 14th September 2019**
+
+### Updates
+ 
+- 13/08/2019 - For **UK cards** the [SCA implementation deadline is March 2021](https://www.fca.org.uk/news/press-releases/fca-agrees-plan-phased-implementation-strong-customer-authentication)
+
 ## Feature
 
 - SCA ready with [Stripe Payment Intents](https://stripe.com/docs/payments/payment-intents)
@@ -19,9 +27,9 @@ Payment Gateway Microservice in Golang
 cp config.json.dist config.json
 vi config.json # Add your config values
 
-ln -s ../../.github/hooks/pre-commit .git/hooks/pre-commit # If you want to contribute
-
-cp config.json test/functional
+# If you want to contribute
+cp .github/hooks/pre-commit .git/hooks/pre-commit
+# Open and change absolute config path
 
 go run main.go # go build main.go
 ```
@@ -29,7 +37,8 @@ go run main.go # go build main.go
 ## Tests
 
 ```bash
-go test ./... # In another terminal
+go test ./... -failfast -tags=unit
+go test ./... -failfast -tags=stripe -config=ABS_PATH/config.json
 ```
 
 ### APIs
@@ -44,4 +53,3 @@ See [*projects* section](https://github.com/lelledaniele/upaygo/projects)
 ### Goals
 
 - Finish [Payment Intent project](https://github.com/lelledaniele/upaygo/projects/1) by the end of August 2019.
- **EU SCA law will be on duty after 14th September 2019**
