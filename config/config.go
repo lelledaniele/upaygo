@@ -3,44 +3,26 @@ package appconfig
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
-	"os"
 )
 
-const configFile = "config.json"
-
-//{
-// "stripe": {
-//    "api_keys": {
-//	  "EUR": {
-//		"pk_key": "pk_EUR",
-//		"sk_key": "sk_EUR"
-//	  },
-//	  "default": {
-//        "pk_key": "pk_DEFAULT",
-//        "sk_key": "sk_DEFAULT"
-//      }
-//    }
-//  },
-//  "server": {
-//    "port": "8080"
-//  }
-//}
 var s config
 
-// Reads the config json file and save the content in s global var
-func init() {
-	fc, e := ioutil.ReadFile(configFile)
+// ImportConfig reads the config json reader and save the content in s global var
+func ImportConfig(r io.Reader) error {
+	b, e := ioutil.ReadAll(r)
 	if e != nil {
-		fmt.Printf("Impossible to get configuration file: %v", e)
-		os.Exit(1)
+		return fmt.Errorf("Impossible to read configuration: %v\n", e)
 	}
 
-	e = json.Unmarshal(fc, &s)
+	s = config{} // Reset existing configs
+	e = json.Unmarshal(b, &s)
 	if e != nil {
-		fmt.Printf("Impossible to unmarshal configuration file: %v", e)
-		os.Exit(1)
+		return fmt.Errorf("Impossible to unmarshal configuration: %v\n", e)
 	}
+
+	return nil
 }
 
 // public properties needed for json.Unmarshal

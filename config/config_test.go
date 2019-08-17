@@ -1,8 +1,12 @@
-package appconfig
+// +build unit
+
+package appconfig_test
 
 import (
-	"encoding/json"
+	"strings"
 	"testing"
+
+	appconfig "github.com/lelledaniele/upaygo/config"
 )
 
 const (
@@ -37,10 +41,12 @@ const (
 )
 
 func TestDefaultStripeAPIConfig(t *testing.T) {
-	s = config{}
-	_ = json.Unmarshal([]byte(confWithDefault), &s)
-	got, e := GetStripeAPIConfigByCurrency("NOT_FOUND_CURRENCY")
+	e := appconfig.ImportConfig(strings.NewReader(confWithDefault))
+	if e != nil {
+		t.Errorf("error during the config import: %v", e)
+	}
 
+	got, e := appconfig.GetStripeAPIConfigByCurrency("NOT_FOUND_CURRENCY")
 	if e != nil {
 		t.Errorf("error during the retrieve of Stripe API config by inexistent currency: %v", e)
 	}
@@ -51,19 +57,19 @@ func TestDefaultStripeAPIConfig(t *testing.T) {
 }
 
 func TestWithoutDefaultStripeAPIConfig(t *testing.T) {
-	s = config{}
-	_ = json.Unmarshal([]byte(confWithoutDefault), &s)
-	_, e := GetStripeAPIConfigByCurrency("NOT_FOUND_CURRENCY")
+	e := appconfig.ImportConfig(strings.NewReader(confWithoutDefault))
+	if e != nil {
+		t.Errorf("error during the config import: %v", e)
+	}
 
+	_, e = appconfig.GetStripeAPIConfigByCurrency("NOT_FOUND_CURRENCY")
 	if e == nil {
 		t.Error("configuration without Stripe default API keys must return an error")
 	}
 }
 
 func TestCurrencyStripeAPIConfig(t *testing.T) {
-	s = config{}
-	_ = json.Unmarshal([]byte(confWithDefault), &s)
-	got, e := GetStripeAPIConfigByCurrency("EUR")
+	got, e := appconfig.GetStripeAPIConfigByCurrency("EUR")
 
 	if e != nil {
 		t.Errorf("error during the retrieve of Stripe API config by EUR currency: %v", e)
@@ -75,9 +81,7 @@ func TestCurrencyStripeAPIConfig(t *testing.T) {
 }
 
 func TestLowercaseCurrencyStripeAPIConfig(t *testing.T) {
-	s = config{}
-	_ = json.Unmarshal([]byte(confWithDefault), &s)
-	got, e := GetStripeAPIConfigByCurrency("eur")
+	got, e := appconfig.GetStripeAPIConfigByCurrency("eur")
 
 	if e != nil {
 		t.Errorf("error during the retrieve of Stripe API config by eur currency: %v", e)

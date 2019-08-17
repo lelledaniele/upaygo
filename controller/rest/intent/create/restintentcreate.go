@@ -1,4 +1,4 @@
-package restintentcreate
+package apprestintentcreate
 
 import (
 	"encoding/json"

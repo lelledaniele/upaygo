@@ -1,17 +1,21 @@
-package restintentcreate_test
+// +build stripe
+
+package apprestintentcreate_test
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 
+	appconfig "github.com/lelledaniele/upaygo/config"
+	apprestintentcreate "github.com/lelledaniele/upaygo/controller/rest/intent/create"
 	appcurrency "github.com/lelledaniele/upaygo/currency"
 	appcustomer "github.com/lelledaniele/upaygo/customer"
-
-	restintentcreate "github.com/lelledaniele/upaygo/controller/rest/intent/create"
 )
 
 const (
@@ -27,6 +31,34 @@ type responseCustomer struct {
 	R string `json:"gateway_reference"`
 }
 
+func TestMain(m *testing.M) {
+	var fcp string
+
+	flag.StringVar(&fcp, "config", "", "Provide config file as an absolute path")
+	flag.Parse()
+
+	if fcp == "" {
+		fmt.Print("Integration Stripe test needs the config file absolute path as flag -config")
+		os.Exit(1)
+	}
+	fmt.Printf("provided path was %s\n", fcp)
+
+	fc, e := os.Open(fcp)
+	if e != nil {
+		fmt.Printf("Impossible to get configuration file: %v\n", e)
+		os.Exit(1)
+	}
+	defer fc.Close()
+
+	e = appconfig.ImportConfig(fc)
+	if e != nil {
+		fmt.Printf("Error durring file config import: %v", e)
+		os.Exit(1)
+	}
+
+	os.Exit(m.Run())
+}
+
 // Test a create intent request
 func Test(t *testing.T) {
 	var resI responseIntent
@@ -37,12 +69,12 @@ func Test(t *testing.T) {
 		t.Errorf(errorRestCreateIntent, e)
 	}
 
-	a, ps, w := 9999, "pm_card_visa", httptest.NewRecorder()
+	a, ps, w := 7777, "pm_card_visa", httptest.NewRecorder()
 	p := fmt.Sprintf("currency=%v&amount=%v&payment_source=%v&customer_reference=%v", c.GetISO4217(), a, ps, cus.GetGatewayReference())
 	req := httptest.NewRequest("POST", "http://example.com", strings.NewReader(p))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	restintentcreate.Handler(w, req)
+	apprestintentcreate.Handler(w, req)
 
 	res := w.Result()
 	resBody, e := ioutil.ReadAll(res.Body)
@@ -71,10 +103,11 @@ func TestWithoutCustomer(t *testing.T) {
 
 	c, a, ps, w := "EUR", 9999, "pm_card_visa", httptest.NewRecorder()
 	p := fmt.Sprintf("currency=%v&amount=%v&payment_source=%v", c, a, ps)
+
 	req := httptest.NewRequest("POST", "http://example.com", strings.NewReader(p))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	restintentcreate.Handler(w, req)
+	apprestintentcreate.Handler(w, req)
 
 	res := w.Result()
 	resBody, e := ioutil.ReadAll(res.Body)
