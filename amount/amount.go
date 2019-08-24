@@ -7,6 +7,8 @@ import (
 type Amount interface {
 	GetAmount() int
 	GetCurrency() appcurrency.Currency
+
+	Equal(amount Amount) bool
 }
 
 type a struct {
@@ -22,6 +24,13 @@ func (a *a) GetAmount() int {
 // GetCurrency exposes a.C value
 func (a *a) GetCurrency() appcurrency.Currency {
 	return a.C
+}
+
+// Equal check if a is equal of b
+func (a *a) Equal(b Amount) bool {
+	return a.GetAmount() == b.GetAmount() &&
+		a.GetCurrency() != nil &&
+		a.GetCurrency().Equal(b.GetCurrency())
 }
 
 // New returns a new instance of a

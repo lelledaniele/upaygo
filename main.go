@@ -6,11 +6,14 @@ import (
 	"net/http"
 	"os"
 
+	httpSwagger "github.com/swaggo/http-swagger"
+
 	appconfig "github.com/lelledaniele/upaygo/config"
+	apprestintentconfirm "github.com/lelledaniele/upaygo/controller/rest/intent/confirm"
 	apprestintentcreate "github.com/lelledaniele/upaygo/controller/rest/intent/create"
 
+	"github.com/gorilla/mux"
 	_ "github.com/lelledaniele/upaygo/docs"
-	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 //{
@@ -52,10 +55,10 @@ func main() {
 
 	s := appconfig.GetServerConfig()
 
-	http.Handle("/swagger/", httpSwagger.Handler(
-		httpSwagger.URL(s.GetURI()+"/swagger/doc.json"),
-	))
-	http.HandleFunc(apprestintentcreate.URL, apprestintentcreate.Handler)
+	r := mux.NewRouter()
+	r.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
+	r.HandleFunc(apprestintentcreate.URL, apprestintentcreate.Handler)
+	r.HandleFunc(apprestintentconfirm.URL, apprestintentconfirm.Handler)
 
-	log.Fatal(http.ListenAndServe(":"+s.GetPort(), nil))
+	log.Fatal(http.ListenAndServe(":"+s.GetPort(), r))
 }

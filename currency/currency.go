@@ -7,6 +7,8 @@ import (
 
 type Currency interface {
 	GetISO4217() string
+
+	Equal(c Currency) bool
 }
 
 type c struct {
@@ -16,6 +18,11 @@ type c struct {
 // GetISO4217 exposes c.ISO4217 value
 func (c *c) GetISO4217() string {
 	return c.ISO4217
+}
+
+// Equal checks if a == b
+func (a *c) Equal(b Currency) bool {
+	return a.GetISO4217() == b.GetISO4217()
 }
 
 // New returns a new instance of c

@@ -1,6 +1,6 @@
 // +build stripe
 
-package apppaymentintent_test
+package apppaymentintentcreate_test
 
 import (
 	"flag"
@@ -8,17 +8,15 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stripe/stripe-go/paymentintent"
-
-	apppaymentintent "github.com/lelledaniele/upaygo/payment/intent"
-	"github.com/stripe/stripe-go/customer"
-
 	appamount "github.com/lelledaniele/upaygo/amount"
+	appconfig "github.com/lelledaniele/upaygo/config"
 	appcurrency "github.com/lelledaniele/upaygo/currency"
 	appcustomer "github.com/lelledaniele/upaygo/customer"
+	apppaymentintentcreate "github.com/lelledaniele/upaygo/payment/intent/create"
 	apppaymentsource "github.com/lelledaniele/upaygo/payment/source"
 
-	appconfig "github.com/lelledaniele/upaygo/config"
+	"github.com/stripe/stripe-go/customer"
+	"github.com/stripe/stripe-go/paymentintent"
 )
 
 func TestMain(m *testing.M) {
@@ -31,7 +29,6 @@ func TestMain(m *testing.M) {
 		fmt.Print("Integration Stripe test needs the config file absolute path as flag -config")
 		os.Exit(1)
 	}
-	fmt.Printf("provided path was %s\n", fcp)
 
 	fc, e := os.Open(fcp)
 	if e != nil {
@@ -49,14 +46,14 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestNew(t *testing.T) {
+func TestCreate(t *testing.T) {
 	cur, _ := appcurrency.New("EUR")
 	am := 2045
 	cus, _ := appcustomer.NewStripe("email@email.com", cur)
 	a, _ := appamount.New(am, cur.GetISO4217())
 	ps := apppaymentsource.New("pm_card_visa")
 
-	pi, e := apppaymentintent.New(a, ps, cus)
+	pi, e := apppaymentintentcreate.Create(a, ps, cus)
 	if e != nil {
 		t.Errorf("impossible to create a new payment intent: %v", e)
 	}
@@ -85,11 +82,11 @@ func TestNew(t *testing.T) {
 		t.Errorf("intent customer is incorrect, got: %v want %v", pi.GetCustomer(), cus)
 	}
 
-	if pi.GetSource().GetGatewayReference() != ps.GetGatewayReference() {
-		t.Errorf("intent source is incorrect, got: %v want %v", pi.GetSource(), ps)
+	if pi.GetSource().GetGatewayReference() == "" {
+		t.Error("intent source is empty")
 	}
 
-	if pi.GetAmount() != a {
+	if !pi.GetAmount().Equal(a) {
 		t.Errorf("intent amount is incorrect, got: %v want %v", pi.GetAmount(), a)
 	}
 
@@ -113,13 +110,13 @@ func TestNew(t *testing.T) {
 	_, _ = customer.Del(cus.GetGatewayReference(), nil)
 }
 
-func TestNewWithoutCustomer(t *testing.T) {
+func TestCreateWithoutCustomer(t *testing.T) {
 	cur, _ := appcurrency.New("EUR")
 	am := 2045
 	a, _ := appamount.New(am, cur.GetISO4217())
 	ps := apppaymentsource.New("pm_card_visa")
 
-	pi, e := apppaymentintent.New(a, ps, nil)
+	pi, e := apppaymentintentcreate.Create(a, ps, nil)
 	if e != nil {
 		t.Errorf("impossible to create a new payment intent: %v", e)
 	}
@@ -131,20 +128,20 @@ func TestNewWithoutCustomer(t *testing.T) {
 	_, _ = paymentintent.Cancel(pi.GetGatewayReference(), nil)
 }
 
-func TestNewWithoutAmount(t *testing.T) {
+func TestCreateWithoutAmount(t *testing.T) {
 	ps := apppaymentsource.New("pm_card_visa")
 
-	_, e := apppaymentintent.New(nil, ps, nil)
+	_, e := apppaymentintentcreate.Create(nil, ps, nil)
 	if e == nil {
 		t.Error("intent without amount created")
 	}
 }
 
-func TestNewWithoutPaymentSource(t *testing.T) {
+func TestCreateWithoutPaymentSource(t *testing.T) {
 	am := 2045
 	a, _ := appamount.New(am, "EUR")
 
-	_, e := apppaymentintent.New(a, nil, nil)
+	_, e := apppaymentintentcreate.Create(a, nil, nil)
 	if e == nil {
 		t.Error("intent without amount created")
 	}

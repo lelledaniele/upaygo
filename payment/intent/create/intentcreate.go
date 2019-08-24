@@ -1,22 +1,21 @@
-package apppaymentintent
+package apppaymentintentcreate
 
 import (
 	"errors"
-	"time"
-
-	apperror "github.com/lelledaniele/upaygo/error"
-
-	"github.com/stripe/stripe-go"
-	"github.com/stripe/stripe-go/paymentintent"
 
 	appamount "github.com/lelledaniele/upaygo/amount"
 	appconfig "github.com/lelledaniele/upaygo/config"
 	appcustomer "github.com/lelledaniele/upaygo/customer"
+	apperror "github.com/lelledaniele/upaygo/error"
+	apppaymentintent "github.com/lelledaniele/upaygo/payment/intent"
 	apppaymentsource "github.com/lelledaniele/upaygo/payment/source"
+
+	"github.com/stripe/stripe-go"
+	"github.com/stripe/stripe-go/paymentintent"
 )
 
-// New creates an intent in Stripe and returns it as an instance of i
-func New(a appamount.Amount, p apppaymentsource.Source, c appcustomer.Customer) (Intent, error) {
+// Create creates an intent in Stripe and returns it as an instance of Intent
+func Create(a appamount.Amount, p apppaymentsource.Source, c appcustomer.Customer) (apppaymentintent.Intent, error) {
 	if a == nil || p == nil {
 		return nil, errors.New("impossible to create a payment intent without required parameters")
 	}
@@ -42,7 +41,7 @@ func New(a appamount.Amount, p apppaymentsource.Source, c appcustomer.Customer) 
 		ic.SavePaymentMethod = stripe.Bool(true)
 	}
 
-	spi, e := paymentintent.New(ic)
+	intent, e := paymentintent.New(ic)
 	if e != nil {
 		m, es := apperror.GetStripeErrorMessage(e)
 		if es == nil {
@@ -52,21 +51,5 @@ func New(a appamount.Amount, p apppaymentsource.Source, c appcustomer.Customer) 
 		return nil, e
 	}
 
-	var nat string
-	na := spi.NextAction
-	if na != nil {
-		nat = string(na.Type)
-	}
-
-	return &i{
-		R:    spi.ID,
-		CM:   string(spi.ConfirmationMethod),
-		NA:   nat,
-		OFFS: spi.SetupFutureUsage == "off_session",
-		CT:   time.Unix(spi.Created, 0),
-		C:    c,
-		PS:   p,
-		A:    a,
-		S:    status{S: string(spi.Status)},
-	}, nil
+	return apppaymentintent.FromStripeToAppIntent(*intent), nil
 }

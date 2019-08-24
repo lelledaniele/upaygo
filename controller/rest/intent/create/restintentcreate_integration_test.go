@@ -43,7 +43,6 @@ func TestMain(m *testing.M) {
 		fmt.Print("Integration Stripe test needs the config file absolute path as flag -config")
 		os.Exit(1)
 	}
-	fmt.Printf("provided path was %s\n", fcp)
 
 	fc, e := os.Open(fcp)
 	if e != nil {
@@ -80,10 +79,10 @@ func Test(t *testing.T) {
 
 	res := w.Result()
 	resBody, e := ioutil.ReadAll(res.Body)
-	_ = res.Body.Close()
 	if e != nil {
 		t.Errorf(errorRestCreateIntent, e)
 	}
+	defer res.Body.Close()
 
 	e = json.Unmarshal(resBody, &resI)
 	if e != nil {
