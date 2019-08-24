@@ -38,7 +38,7 @@ const (
 // @Param amount formData int true "Intent's amount"
 // @Param payment_source formData string true "Intent's payment source"
 // @Param customer_reference formData string false "Intent's customer reference"
-// @Success 200 {interface} paymentintent.Intent
+// @Success 200 {interface} apppaymentintent.Intent
 // @Failure 405 {object} apperror.RESTError
 // @Failure 500 {object} apperror.RESTError
 // @Router /payment_intents [post]

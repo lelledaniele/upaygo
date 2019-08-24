@@ -1,4 +1,6 @@
 /.idea
-/upaygo.iml
 /vendor
+/docs
+
+/upaygo.iml
 /config.json

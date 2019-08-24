@@ -27,6 +27,9 @@ Payment Gateway Microservice in Golang
 cp config.json.dist config.json
 vi config.json # Add your config values
 
+# API doc
+swag init
+
 # If you want to contribute
 cp .github/hooks/pre-commit .git/hooks/pre-commit
 # Open and change absolute config path
@@ -49,7 +52,3 @@ go test ./... -failfast -tags=stripe -config=ABS_PATH/config.json
 ## TODO
 
 See [*projects* section](https://github.com/lelledaniele/upaygo/projects)
-
-### Goals
-
-- Finish [Payment Intent project](https://github.com/lelledaniele/upaygo/projects/1) by the end of August 2019.
