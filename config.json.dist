@@ -10,7 +10,7 @@
     },
     "default": {
       "pk_key": "pk_XXX",
-      "sk_key": "sk_XXX"
+      "sk_key": "sk_xxx"
     }
   },
   "server": {
