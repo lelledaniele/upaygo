@@ -33,8 +33,9 @@ jobs:
       - name: Config
         run: |
           cp config.json.dist config.json
-          while read a ; do echo ${a//pk_XXX/${{ secrets.STRIPE_PK }}} ; done < config.json > config.json.t ; mv config.json{.t,}
-          while read a ; do echo ${a//sk_XXX/${{ secrets.STRIPE_SK }}} ; done < config.json > config.json.t ; mv config.json{.t,}
+          while read a ; do echo ${a//pk_XXX/AA} ; done < config.json > config.json.t ; mv config.json{.t,}
+          while read a ; do echo ${a//sk_XXX/BB} ; done < config.json > config.json.t ; mv config.json{.t,}
+          cat config.json
 
       - name: Tests - Unit
         run: go test ./... -failfast -tags=unit
