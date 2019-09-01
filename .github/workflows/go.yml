@@ -35,6 +35,7 @@ jobs:
           cp config.json.dist config.json
           sed -i 's/pk_XXX/${{ secrets.STRIPE_PK }}/g' config.json
           sed -i 's/sk_XXX/${{ secrets.STRIPE_SK }}/g' config.json
+          cat config.json
 
       - name: Tests - Unit
         run: go test ./... -failfast -tags=unit
