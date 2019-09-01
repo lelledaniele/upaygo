@@ -17,12 +17,10 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Swagger - Installation
-        run: |
-          export GOPATH="$HOME/go"
-          go get -u github.com/swaggo/swag/cmd/swag
+        run: go get -u github.com/swaggo/swag/cmd/swag
 
       - name: Swagger - Init
-        run: swag init
+        run: ~/go/bin/swag init
 
       - name: Get dependencies
         run: |
