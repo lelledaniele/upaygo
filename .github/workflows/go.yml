@@ -16,10 +16,11 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
 
-      - name: Swagger
-        run: |
-          go get github.com/swaggo/swag/cmd/swag
-          swag init
+      - name: Swagger - Installation
+        run: go get -u github.com/swaggo/swag/cmd/swag
+
+      - name: Swagger - Init
+        run: swag init
 
       - name: Get dependencies
         run: |
