@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Swagger - Installation
-        run: go get -u github.com/swaggo/swag/cmd/swag
+        run: go get -u github.com/swaggo/swag/cmd/swag; export GOPATH="$HOME/go";
 
       - name: Swagger - Init
         run: swag init
