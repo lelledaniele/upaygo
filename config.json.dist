@@ -8,7 +8,6 @@
       "pk_key": "pk_XXX",
       "sk_key": "sk_xxx"
     },
-    // ...
     "default": {
       "pk_key": "pk_XXX",
       "sk_key": "sk_XXX"
