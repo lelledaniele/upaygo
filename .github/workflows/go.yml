@@ -33,9 +33,8 @@ jobs:
       - name: Config
         run: |
           cp config.json.dist config.json
-          sed -i 's/pk_XXX/${{ secrets.STRIPE_PK }}/g' config.json
-          sed -i 's/sk_XXX/${{ secrets.STRIPE_SK }}/g' config.json
-          cat config.json
+          while read a ; do echo ${a//pk_XXX/${{ secrets.STRIPE_PK }}} ; done < config.json > config.json.t ; mv config.json{.t,}
+          while read a ; do echo ${a//sk_XXX/${{ secrets.STRIPE_SK }}} ; done < config.json > config.json.t ; mv config.json{.t,}
 
       - name: Tests - Unit
         run: go test ./... -failfast -tags=unit
