@@ -1,3 +1,5 @@
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/bf7491736c431cd822f6)
+
 # uPay in Golang
 
 Payment Gateway Microservice in Golang
@@ -47,7 +49,6 @@ go test ./... -failfast -tags=stripe -config=ABS_PATH/config.json
 ### APIs
 
 - Swagger */swagger/index.html*
-- [Postman collection](https://www.getpostman.com/collections/08908d8ba23942d002f6)
 
 ## TODO
 
