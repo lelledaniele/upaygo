@@ -40,7 +40,7 @@ jobs:
         run: go test ./... -failfast -tags=unit
 
       - name: Tests - Stripe
-        run: go test ./... -failfast -tags=stripe -config=/data/config.json
+        run: go test ./... -failfast -tags=stripe -config=/home/runner/work/upaygo/upaygo/config.json
 
       - name: Build
         run: go build -v .
