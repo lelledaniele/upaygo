@@ -94,7 +94,7 @@ func Test(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	req := httptest.NewRequest("POST", "http://example:8080.com", strings.NewReader("currency=EUR"))
+	req := httptest.NewRequest("POST", "http://example.com", strings.NewReader("currency=EUR"))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req = mux.SetURLVars(req, map[string]string{"id": intentID})
 

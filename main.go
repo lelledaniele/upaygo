@@ -16,23 +16,6 @@ import (
 	_ "github.com/lelledaniele/upaygo/docs"
 )
 
-//{
-// "stripe": {
-//    "api_keys": {
-//	  "EUR": {
-//		"pk_key": "pk_EUR",
-//		"sk_key": "sk_EUR"
-//	  },
-//	  "default": {
-//        "pk_key": "pk_DEFAULT",
-//        "sk_key": "sk_DEFAULT"
-//      }
-//    }
-//  },
-//  "server": {
-//    "port": "8080"
-//  }
-//}
 const configFile = "config.json"
 
 // @title uPayment in GO
