@@ -18,8 +18,8 @@ jobs:
 
       - name: Swagger - Installation
         run: |
-          go get -u github.com/swaggo/swag/cmd/swag
           export GOPATH="$HOME/go"
+          go get -u github.com/swaggo/swag/cmd/swag
 
       - name: Swagger - Init
         run: swag init
