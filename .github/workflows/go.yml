@@ -1,0 +1,46 @@
+name: Go
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13rc2
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+
+      - name: Swagger - Installation
+        run: go get -u github.com/swaggo/swag/cmd/swag
+
+      - name: Swagger - Init
+        run: ~/go/bin/swag init
+
+      - name: Get dependencies
+        run: |
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
+
+      - name: Config
+        run: |
+          cp config.json.dist config.json
+          while read a ; do echo ${a//pk_XXX/${{ secrets.STRIPE_PK }}} ; done < config.json > config.json.t ; mv config.json{.t,}
+          while read a ; do echo ${a//sk_xxx/${{ secrets.STRIPE_SK }}} ; done < config.json > config.json.t ; mv config.json{.t,}
+
+      - name: Tests - Unit
+        run: go test ./... -failfast -tags=unit
+
+      - name: Tests - Stripe
+        run: go test ./... -failfast -tags=stripe -config=/home/runner/work/upaygo/upaygo/config.json
+
+      - name: Build
+        run: go build -v .
