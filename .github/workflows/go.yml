@@ -17,7 +17,9 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Swagger
-        run: swag init
+        run: |
+          go get -u github.com/swaggo/swag/cmd/swag
+          swag init
 
       - name: Get dependencies
         run: |
