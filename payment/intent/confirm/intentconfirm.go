@@ -12,7 +12,7 @@ import (
 	"github.com/stripe/stripe-go/paymentintent"
 )
 
-// Confirm gets the intent id from c Stripe account and returns it as an instance of i
+// Confirm gets the intent id from c Stripe account and confirm it
 func Confirm(id string, c appcurrency.Currency) (apppaymentintent.Intent, error) {
 	if id == "" || c == nil {
 		return nil, errors.New("impossible to confirm the payment intent without required parameters")

@@ -7,20 +7,19 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"net/http/httptest"
 	"os"
 	"strings"
 	"testing"
 
-	"github.com/gorilla/mux"
-
+	appconfig "github.com/lelledaniele/upaygo/config"
 	apprestintentconfirm "github.com/lelledaniele/upaygo/controller/rest/intent/confirm"
+	appcurrency "github.com/lelledaniele/upaygo/currency"
 
+	"github.com/gorilla/mux"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/paymentintent"
-
-	appconfig "github.com/lelledaniele/upaygo/config"
-	appcurrency "github.com/lelledaniele/upaygo/currency"
 )
 
 const (
@@ -94,7 +93,7 @@ func Test(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	req := httptest.NewRequest("POST", "http://example.com", strings.NewReader("currency=EUR"))
+	req := httptest.NewRequest(http.MethodPost, "http://example.com", strings.NewReader("currency=EUR"))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req = mux.SetURLVars(req, map[string]string{"id": intentID})
 
