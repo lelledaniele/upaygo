@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"net/http/httptest"
 	"os"
 	"strings"
@@ -107,7 +108,7 @@ func TestWithoutCustomer(t *testing.T) {
 	c, a, ps, w := "EUR", 9999, "pm_card_visa", httptest.NewRecorder()
 	p := fmt.Sprintf("currency=%v&amount=%v&payment_source=%v", c, a, ps)
 
-	req := httptest.NewRequest("POST", "http://example.com", strings.NewReader(p))
+	req := httptest.NewRequest(http.MethodPost, "http://example.com", strings.NewReader(p))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	apprestintentcreate.Handler(w, req)
