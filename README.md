@@ -39,6 +39,21 @@ cp .github/hooks/pre-commit .git/hooks/pre-commit
 go run main.go # go build main.go
 ```
 
+## How to use
+
+*Example of a checkout web page*
+
+1) User to insert card information with Stripe Elements
+2) Create an intent with JS SDK
+3) Confirm the intent
+4) Does the intent requires 3D Secure (intent status and next_action param)
+    1) No, Point 5)    
+    2) Yes, Stripe Elements will open the a 3D Secure popup
+5) Do you after checkout domain logic
+6) Any error during your checkout process?
+    1) Yes, cancel the intent
+    2) No, capture the intent
+
 ## Tests
 
 ```bash
