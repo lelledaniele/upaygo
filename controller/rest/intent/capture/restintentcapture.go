@@ -36,6 +36,7 @@ const (
 // @Param id path string true "Intent's ID"
 // @Param currency formData string true "Intent's currency"
 // @Success 200 {interface} apppaymentintent.Intent
+// @Failure 400 {object} apperror.RESTError
 // @Failure 405 {object} apperror.RESTError
 // @Failure 500 {object} apperror.RESTError
 // @Router /payment_intents/{id}/capture [post]
@@ -43,6 +44,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", responseTye)
 
 	if r.Method != method {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+
 		e := apperror.RESTError{
 			M: fmt.Sprintf(errorMethod, method),
 		}
@@ -53,6 +56,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	ID, cur, e := getParams(r)
 	if e != nil {
+		w.WriteHeader(http.StatusBadRequest)
+
 		e := apperror.RESTError{
 			M: e.Error(),
 		}
@@ -63,6 +68,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	appintent, e := apppaymentintentcapture.Capture(ID, cur)
 	if e != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+
 		e := apperror.RESTError{
 			M: fmt.Sprintf(errorIntentCapture, e),
 		}
@@ -73,6 +80,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	e = json.NewEncoder(w).Encode(appintent)
 	if e != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+
 		e := apperror.RESTError{
 			M: fmt.Sprintf(errorIntentEncoding, e),
 		}
