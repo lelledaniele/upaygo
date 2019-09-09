@@ -43,11 +43,11 @@ func main() {
 
 	r := mux.NewRouter()
 	r.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
-	r.HandleFunc(apprestintentget.URL, apprestintentget.Handler)
-	r.HandleFunc(apprestintentcreate.URL, apprestintentcreate.Handler)
-	r.HandleFunc(apprestintentconfirm.URL, apprestintentconfirm.Handler)
-	r.HandleFunc(apprestintentcapture.URL, apprestintentcapture.Handler)
-	r.HandleFunc(apprestintentcancel.URL, apprestintentcancel.Handler)
+	r.HandleFunc(apprestintentget.URL, apprestintentget.Handler).Methods(apprestintentget.Method)
+	r.HandleFunc(apprestintentcreate.URL, apprestintentcreate.Handler).Methods(apprestintentcreate.Method)
+	r.HandleFunc(apprestintentconfirm.URL, apprestintentconfirm.Handler).Methods(apprestintentconfirm.Method)
+	r.HandleFunc(apprestintentcapture.URL, apprestintentcapture.Handler).Methods(apprestintentcapture.Method)
+	r.HandleFunc(apprestintentcancel.URL, apprestintentcancel.Handler).Methods(apprestintentcancel.Method)
 
 	log.Fatal(http.ListenAndServe(":"+s.GetPort(), r))
 }

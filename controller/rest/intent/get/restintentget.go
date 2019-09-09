@@ -15,11 +15,10 @@ import (
 
 const (
 	URL    = "/payment_intents/{id}"
-	method = http.MethodGet
+	Method = http.MethodGet
 
 	responseTye = "application/json"
 
-	errorMethod            = "'%v' is the only method supported"
 	errorParamPathMissing  = "missing URL in-path mandatory parameters to get the payment intent"
 	errorParamQueryMissing = "error during the query parsing: '%v'"
 	errorAmountCreation    = "error during the intent amount creation: '%v'"
@@ -41,17 +40,6 @@ const (
 // @Router /payment_intents/{id} [get]
 func Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", responseTye)
-
-	if r.Method != method {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-
-		e := apperror.RESTError{
-			M: fmt.Sprintf(errorMethod, method),
-		}
-		_ = json.NewEncoder(w).Encode(e)
-
-		return
-	}
 
 	ID, cur, e := getParams(r)
 	if e != nil {

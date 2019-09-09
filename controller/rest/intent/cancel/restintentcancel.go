@@ -15,11 +15,10 @@ import (
 
 const (
 	URL    = "/payment_intents/{id}/cancel"
-	method = http.MethodPost
+	Method = http.MethodPost
 
 	responseTye = "application/json"
 
-	errorMethod              = "'%v' is the only method supported"
 	errorParamPathMissing    = "missing URL in-path mandatory parameters to cancel a payment intent"
 	errorParsingParam        = "error during the payload parsing: '%v'"
 	errorParamPayloadMissing = "missing payload mandatory parameters to cancel a payment intent"
@@ -42,17 +41,6 @@ const (
 // @Router /payment_intents/{id}/cancel [post]
 func Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", responseTye)
-
-	if r.Method != method {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-
-		e := apperror.RESTError{
-			M: fmt.Sprintf(errorMethod, method),
-		}
-		_ = json.NewEncoder(w).Encode(e)
-
-		return
-	}
 
 	ID, cur, e := getParams(r)
 	if e != nil {

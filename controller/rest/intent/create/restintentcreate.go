@@ -16,11 +16,10 @@ import (
 
 const (
 	URL    = "/payment_intents"
-	method = http.MethodPost
+	Method = http.MethodPost
 
 	responseTye = "application/json"
 
-	errorMethod          = "'%v' is the only method supported"
 	errorParsingParam    = "error during the payload parsing: '%v'"
 	errorParamMissing    = "missing payload mandatory parameters to create a payment intent"
 	errorParamAmountType = "error during the amount conversion: '%v'"
@@ -45,17 +44,6 @@ const (
 // @Router /payment_intents [post]
 func Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", responseTye)
-
-	if r.Method != method {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-
-		e := apperror.RESTError{
-			M: fmt.Sprintf(errorMethod, method),
-		}
-		_ = json.NewEncoder(w).Encode(e)
-
-		return
-	}
 
 	amount, ps, cus, e := getParams(r)
 	if e != nil {
