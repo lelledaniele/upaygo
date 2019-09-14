@@ -36,7 +36,7 @@ swag init
 cp .github/hooks/pre-commit .git/hooks/pre-commit
 # Open and change absolute config path
 
-go run main.go # go build main.go
+go run main.go -config=config.json
 ```
 
 ## How to use

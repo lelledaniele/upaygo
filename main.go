@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -19,7 +20,16 @@ import (
 	_ "github.com/lelledaniele/upaygo/docs"
 )
 
-const configFile = "config.json"
+var configFile string
+
+func init() {
+	flag.StringVar(&configFile, "config", "", "Path for config file")
+	flag.Parse()
+
+	if configFile == "" {
+		log.Fatal("Flag 'config' for configuration file path is required")
+	}
+}
 
 // @title uPayment in GO
 // @version 1.0.0
@@ -28,15 +38,13 @@ const configFile = "config.json"
 func main() {
 	fc, e := os.Open(configFile)
 	if e != nil {
-		fmt.Printf("Impossible to get configuration file: %v\n", e)
-		os.Exit(1)
+		log.Fatal(fmt.Sprintf("Impossible to open configuration file: %v\n", e))
 	}
 	defer fc.Close()
 
 	e = appconfig.ImportConfig(fc)
 	if e != nil {
-		fmt.Printf("Error durring file config import: %v", e)
-		os.Exit(1)
+		log.Fatal(fmt.Sprintf("Error durring file config import: %v\n", e))
 	}
 
 	s := appconfig.GetServerConfig()
