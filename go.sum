@@ -60,6 +60,8 @@ github.com/stripe/stripe-go v61.27.0+incompatible h1:p0HgsaOYus3VbiUS26GgnZ/wa3i
 github.com/stripe/stripe-go v61.27.0+incompatible/go.mod h1:A1dQZmO/QypXmsL0T8axYZkSN/uA/T/A64pfKdBAMiY=
 github.com/stripe/stripe-go v62.9.0+incompatible h1:O9SBIruVc8uMdyxSVMSXiKZRujnn45bpn8eAyn8BfcQ=
 github.com/stripe/stripe-go v62.9.0+incompatible/go.mod h1:A1dQZmO/QypXmsL0T8axYZkSN/uA/T/A64pfKdBAMiY=
+github.com/stripe/stripe-go v62.10.0+incompatible h1:NA0ZdyXlogeRY1YRmx3xL3/4r3vQjAU3Y175+IwFoYo=
+github.com/stripe/stripe-go v62.10.0+incompatible/go.mod h1:A1dQZmO/QypXmsL0T8axYZkSN/uA/T/A64pfKdBAMiY=
 github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14 h1:PyYN9JH5jY9j6av01SpfRMb+1DWg/i3MbGOKPxJ2wjM=
 github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14/go.mod h1:gxQT6pBGRuIGunNf/+tSOB5OHvguWi8Tbt82WOkf35E=
 github.com/swaggo/http-swagger v0.0.0-20190614090009-c2865af9083e h1:m5sYJ43teIUlESuKRFQRRm7kqi6ExiYwVKfoXNuRgHU=
