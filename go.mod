@@ -9,6 +9,6 @@ require (
 	github.com/stripe/stripe-go v62.10.0+incompatible
 	github.com/swaggo/http-swagger v0.0.0-20190614090009-c2865af9083e
 	github.com/swaggo/swag v1.6.7
-	golang.org/x/text v0.3.2
+	golang.org/x/text v0.3.3
 	golang.org/x/tools v0.0.0-20190908135931-fef9eaa9e42b // indirect
 )
