@@ -1,3 +1,6 @@
+![Go Tests](https://github.com/lelledaniele/upaygo/workflows/Go/badge.svg)
+![Code scanning - action](https://github.com/lelledaniele/upaygo/workflows/Code%20scanning%20-%20action/badge.svg)
+
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/bf7491736c431cd822f6)
 
 # uPay in Golang
