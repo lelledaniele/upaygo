@@ -7,14 +7,6 @@
 
 Payment Gateway Microservice in Golang
 
-## PSD2 SCA
-
-**EU SCA law will be on duty after 14th September 2019**
-
-### Updates
- 
-- 13/08/2019 - For **UK cards** the [SCA implementation deadline is March 2021](https://www.fca.org.uk/news/press-releases/fca-agrees-plan-phased-implementation-strong-customer-authentication)
-
 ## Feature
 
 - SCA ready with [Stripe Payment Intents](https://stripe.com/docs/payments/payment-intents)
